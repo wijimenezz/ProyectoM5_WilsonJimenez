@@ -19,3 +19,5 @@ export const createRepositorySchema = z.object({
     .describe("descripcion del repositorio")
     .optional(),
 });
+
+export type CreateRepository = z.infer<typeof createRepositorySchema>;

@@ -19,3 +19,5 @@ export const listRepositoriesSchema = z.object({
     .default(30)
     .describe("Cantidad de resultados por página, máx 100 (default: 30)"),
 });
+
+export type ListRepository = z.infer<typeof listRepositoriesSchema>;

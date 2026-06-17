@@ -3,7 +3,7 @@ import { z } from "zod";
 export const issueSchema = z.object({
   number: z.number(),
   title: z.string(),
-  url: z.string().url(),
+  url: z.url(),
   state: z.string(),
   body: z.string().nullable(),
 });

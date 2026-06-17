@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { repositorySchema } from "./repository.js";
 import { issueSchema } from "./issue.js";
 
 export const CreateRepositoryOutputSchema = z.object({
@@ -7,4 +6,6 @@ export const CreateRepositoryOutputSchema = z.object({
   data: issueSchema,
 });
 
-export type CreateIssueOutput = z.infer<typeof CreateRepositoryOutputSchema>;
+export type CreateRepositoryOutput = z.infer<
+  typeof CreateRepositoryOutputSchema
+>;

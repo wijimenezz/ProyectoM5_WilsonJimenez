@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createIssueSchema } from "./createIssue.js";
+import { createIssueSchema } from "../inputs/createIssueInput.js";
 
 export const CreateIssueOutputSchema = z.object({
   ok: z.literal(true),

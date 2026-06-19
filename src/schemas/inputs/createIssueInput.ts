@@ -1,10 +1,8 @@
 import { z } from "zod";
+import { repositoryOwnerSchema } from "../shared/owner.js";
 
 export const createIssueSchema = z.object({
-  owner: z
-    .string()
-    .min(1)
-    .describe("dueño del Repositorio (empresa u organización)"),
+  owner: repositoryOwnerSchema,
   repo: z.string().min(1).describe("Nombre del Repositorio"),
   title: z
     .string()
@@ -17,4 +15,4 @@ export const createIssueSchema = z.object({
     .describe("Cuerpo del issue en Markdown (opcional)"),
 });
 
-export type CreatedIssueInput = z.infer<typeof createIssueSchema>;
+export type CreateIssueInput = z.infer<typeof createIssueSchema>;

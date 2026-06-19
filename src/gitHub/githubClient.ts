@@ -1,20 +1,19 @@
 import { Octokit } from "@octokit/rest";
 import { createOctokit } from "./octokit.js";
 import { githubRequest } from "./request.js";
-import { Issue } from "../schemas/issue.js";
 import { CreatedIssue } from "../schemas/createdIssue.js";
+import { CreateRepository } from "../schemas/inputs/createRepository.js";
+import { Issue } from "../schemas/issue.js";
+import { ListIssueInput } from "../schemas/inputs/listIssues.js";
+import { CreateIssueInput } from "../schemas/inputs/createIssueInput.js";
 
 export class GitHubClient {
   private octokit: Octokit;
   constructor(octokit: Octokit = createOctokit()) {
     this.octokit = octokit;
   }
-  async createIssue(
-    owner: string,
-    repo: string,
-    title: string,
-    body?: string,
-  ): Promise<CreatedIssue> {
+  async createIssue(input: CreateIssueInput): Promise<CreatedIssue> {
+    const { owner, repo, title, body } = input;
     const data = await githubRequest(() =>
       this.octokit.issues.create({ owner, repo, title, body }),
     );
@@ -23,5 +22,26 @@ export class GitHubClient {
       url: data.html_url,
       title: data.title,
     };
+  }
+
+  async listIssues(input: ListIssueInput): Promise<Issue[]> {
+    const { owner, repo, state, perPage, page } = input;
+    const data = await githubRequest(() =>
+      this.octokit.issues.listForRepo({
+        owner,
+        repo,
+        state,
+        per_page: perPage,
+        page,
+      }),
+    );
+
+    return data.map((issue) => ({
+      number: issue.number,
+      title: issue.title,
+      state: issue.state as "open" | "closed",
+      url: issue.html_url,
+      createdAt: issue.created_at,
+    }));
   }
 }

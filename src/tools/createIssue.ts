@@ -41,10 +41,8 @@ export function ResgisterCreateIssue(server: McpServer) {
       const { owner, repo, title, body } = parsed.data;
       const gh = new GitHubClient();
 
-      type Result = Awaited<ReturnType<typeof gh.createIssue>>;
-
       try {
-        const data = await gh.createIssue(owner, repo, title, body);
+        const data = await gh.createIssue({ owner, repo, title, body });
         const result = { ok: true, data };
 
         return {

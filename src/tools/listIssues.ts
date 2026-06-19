@@ -1,20 +1,19 @@
-import { z } from "zod";
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
-import { createIssueSchema } from "../schemas/inputs/createIssueInput.js";
-import { CreateIssueOutputSchema } from "../schemas/outputs/createIssue.Output.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
+import { listIssuesInputSchema } from "../schemas/inputs/listIssues.js";
+import { listIssueOutputSchema } from "../schemas/outputs/listIssues.Output.js";
 import { GitHubClient } from "../github/githubClient.js";
 import { toToolError } from "./toolResult.js";
 
-export function ResgisterCreateIssue(server: McpServer) {
+export function RegisterListIssues(server: McpServer) {
   server.registerTool(
-    "create_issue",
+    "list_issues",
     {
-      description: "Crea un repositorio en github",
-      inputSchema: createIssueSchema,
-      outputSchema: CreateIssueOutputSchema,
+      description: "Lista los issues de un repositorio en GitHub",
+      inputSchema: listIssuesInputSchema,
+      outputSchema: listIssueOutputSchema,
     },
     async (args) => {
-      const parsed = createIssueSchema.safeParse(args);
+      const parsed = listIssuesInputSchema.safeParse(args);
 
       if (!parsed.success) {
         const messages = parsed.error.issues.map((e) => e.message).join("; ");
@@ -28,22 +27,16 @@ export function ResgisterCreateIssue(server: McpServer) {
         };
 
         return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(body),
-            },
-          ],
+          content: [{ type: "text", text: JSON.stringify(body) }],
           isError: true,
         };
       }
 
-      const { owner, repo, title, body } = parsed.data;
       const gh = new GitHubClient();
 
       try {
-        const data = await gh.createIssue({ owner, repo, title, body });
-        const result = { ok: true, data };
+        const issues = await gh.listIssues(parsed.data);
+        const result = { ok: true, data: issues };
 
         return {
           structuredContent: result,

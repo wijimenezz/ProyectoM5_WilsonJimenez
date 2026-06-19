@@ -3,9 +3,10 @@ import { createOctokit } from "./octokit.js";
 import { githubRequest } from "./request.js";
 import { CreatedIssue } from "../schemas/createdIssue.js";
 import { CreateRepository } from "../schemas/inputs/createRepository.js";
-import { Issue } from "../schemas/issue.js";
 import { ListIssueInput } from "../schemas/inputs/listIssues.js";
 import { CreateIssueInput } from "../schemas/inputs/createIssueInput.js";
+import { ListissuesOutput } from "../schemas/outputs/listIssues.Output.js";
+import { Issue } from "../schemas/issue.js";
 
 export class GitHubClient {
   private octokit: Octokit;

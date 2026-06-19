@@ -7,6 +7,7 @@ import { ListIssueInput } from "../schemas/inputs/listIssues.js";
 import { CreateIssueInput } from "../schemas/inputs/createIssueInput.js";
 import { ListissuesOutput } from "../schemas/outputs/listIssues.Output.js";
 import { Issue } from "../schemas/issue.js";
+import { Repository } from "../schemas/repository.js";
 
 export class GitHubClient {
   private octokit: Octokit;
@@ -44,5 +45,26 @@ export class GitHubClient {
       url: issue.html_url,
       createdAt: issue.created_at,
     }));
+  }
+
+  async createRepository(input: CreateRepository): Promise<Repository> {
+    const { name, description, private: isPrivate } = input;
+    const data = await githubRequest(() =>
+      this.octokit.repos.createForAuthenticatedUser({
+        name,
+        description,
+        private: isPrivate,
+        auto_init: true,
+      }),
+    );
+
+    return {
+      owner: data.owner.login,
+      fullName: data.full_name,
+      description: data.description,
+      url: data.html_url,
+      private: data.private,
+      defaultBranch: data.default_branch,
+    };
   }
 }

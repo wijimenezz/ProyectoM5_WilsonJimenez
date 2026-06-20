@@ -9,6 +9,8 @@ import { ListissuesOutput } from "../schemas/outputs/listIssues.Output.js";
 import { Issue } from "../schemas/issue.js";
 import { Repository } from "../schemas/repository.js";
 import { ListRepository } from "../schemas/inputs/listRepository.js";
+import { FileInput } from "../schemas/inputs/createfile.js";
+import { fileOutput } from "../schemas/file.js";
 
 export class GitHubClient {
   private octokit: Octokit;
@@ -87,5 +89,69 @@ export class GitHubClient {
       owner: repo.owner.login,
       defaultBranch: repo.default_branch,
     }));
+  }
+
+  async createFile(input: FileInput): Promise<fileOutput> {
+    const { owner, repo, branch, path, content, message } = input;
+    const refData = await githubRequest(() =>
+      this.octokit.git.getRef({
+        owner,
+        repo,
+        ref: `heads/${branch}`,
+      }),
+    );
+    const commitSha = refData.object.sha;
+
+    const commitData = await githubRequest(() =>
+      this.octokit.git.getCommit({
+        owner,
+        repo,
+        commit_sha: commitSha,
+      }),
+    );
+    const treeSha = commitData.tree.sha;
+
+    const blobData = await githubRequest(() =>
+      this.octokit.git.createBlob({
+        owner,
+        repo,
+        content: Buffer.from(content, "utf-8").toString("base64"),
+        encoding: "base64",
+      }),
+    );
+    0;
+
+    const treeData = await githubRequest(() =>
+      this.octokit.git.createTree({
+        owner,
+        repo,
+        base_tree: treeSha,
+        tree: [{ path, mode: "100644", type: "blob", sha: blobData.sha }],
+      }),
+    );
+
+    const newCommit = await githubRequest(() =>
+      this.octokit.git.createCommit({
+        owner,
+        repo,
+        message,
+        tree: treeData.sha,
+        parents: [commitSha],
+      }),
+    );
+    await githubRequest(() =>
+      this.octokit.git.updateRef({
+        owner,
+        repo,
+        ref: `heads/${branch}`,
+        sha: newCommit.sha,
+      }),
+    );
+    return {
+      sha: newCommit.sha,
+      url: `https://github.com/${owner}/${repo}/blob/${branch}/${path}`,
+      path,
+      branch,
+    };
   }
 }

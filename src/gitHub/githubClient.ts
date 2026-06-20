@@ -8,6 +8,7 @@ import { CreateIssueInput } from "../schemas/inputs/createIssueInput.js";
 import { ListissuesOutput } from "../schemas/outputs/listIssues.Output.js";
 import { Issue } from "../schemas/issue.js";
 import { Repository } from "../schemas/repository.js";
+import { ListRepository } from "../schemas/inputs/listRepository.js";
 
 export class GitHubClient {
   private octokit: Octokit;
@@ -66,5 +67,25 @@ export class GitHubClient {
       private: data.private,
       defaultBranch: data.default_branch,
     };
+  }
+
+  async listRepositories(input: ListRepository): Promise<Repository[]> {
+    const { type, sort, per_page } = input;
+    const data = await githubRequest(() =>
+      this.octokit.repos.listForAuthenticatedUser({
+        type,
+        sort,
+        per_page,
+      }),
+    );
+
+    return data.map((repo) => ({
+      fullName: repo.full_name,
+      url: repo.html_url,
+      private: repo.private,
+      description: repo.description ?? null,
+      owner: repo.owner.login,
+      defaultBranch: repo.default_branch,
+    }));
   }
 }

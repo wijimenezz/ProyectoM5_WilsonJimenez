@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
-import { createfileInputSchema } from "../schemas/inputs/createfile.js";
+import { createfileInputSchema } from "../schemas/inputs/createFileIinput.js";
 import { fileOutputSchema } from "../schemas/outputs/file.Output.js";
 import { GitHubClient } from "../github/githubClient.js";
 import { toToolError } from "./toolResult.js";
@@ -51,6 +51,4 @@ export function RegisterCreateFile(server: McpServer) {
       }
     },
   );
-
-  console.error("[RegisterCreateFile] tool registrada ✅");
 }

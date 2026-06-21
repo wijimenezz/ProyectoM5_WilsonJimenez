@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { issueSchema } from "./issue.js";
+import { repositorySchema } from "../repository.js";
 
 export const CreateRepositoryOutputSchema = z.object({
   ok: z.literal(true),
-  data: issueSchema,
+  data: repositorySchema,
 });
 
 export type CreateRepositoryOutput = z.infer<

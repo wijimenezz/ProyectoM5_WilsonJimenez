@@ -5,11 +5,11 @@ import { CreatedIssue } from "../schemas/createdIssue.js";
 import { CreateRepository } from "../schemas/inputs/createRepository.js";
 import { ListIssueInput } from "../schemas/inputs/listIssues.js";
 import { CreateIssueInput } from "../schemas/inputs/createIssueInput.js";
-import { ListissuesOutput } from "../schemas/outputs/listIssues.Output.js";
 import { Issue } from "../schemas/issue.js";
 import { Repository } from "../schemas/repository.js";
 import { ListRepository } from "../schemas/inputs/listRepository.js";
-import { FileInput } from "../schemas/inputs/createfile.js";
+import { FileInput } from "../schemas/inputs/createFileIinput.js";
+
 import { fileOutput } from "../schemas/file.js";
 
 export class GitHubClient {

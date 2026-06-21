@@ -4,7 +4,7 @@ import { CreateRepositoryOutputSchema } from "../schemas/outputs/createRepositor
 import { GitHubClient } from "../github/githubClient.js";
 import { toToolError } from "./toolResult.js";
 
-export function registerCreateRepository(server: McpServer) {
+export function RegisterCreateRepository(server: McpServer) {
   server.registerTool(
     "create_repository",
     {

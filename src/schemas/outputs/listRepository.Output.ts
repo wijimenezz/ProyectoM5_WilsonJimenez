@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { repositorySchema } from "./repository.js";
-import { listRepositoriesSchema } from "./listRepository.js";
+import { repositorySchema } from "../repository.js";
+import { listRepositoriesSchema } from "../inputs/listRepository.js";
 
 export const ListRepositoriesOutputSchema = z.object({
   ok: z.literal(true),

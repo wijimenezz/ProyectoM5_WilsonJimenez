@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { createIssueSchema } from "../inputs/createIssueInput.js";
+import { createdIssueSchema } from "../createdIssue.js";
 
 export const CreateIssueOutputSchema = z.object({
   ok: z.literal(true),
-  data: createIssueSchema,
+  data: createdIssueSchema,
 });
 
 export type CreateIssueOutput = z.infer<typeof CreateIssueOutputSchema>;

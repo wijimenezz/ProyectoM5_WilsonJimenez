@@ -6,7 +6,7 @@ export const issueSchema = z.object({
   url: z.url(),
   state: z.string(),
   body: z.string().nullable().optional(),
-  createdAt: z.iso.date(),
+  createdAt: z.iso.datetime(),
 });
 
 export type Issue = z.infer<typeof issueSchema>;

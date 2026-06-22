@@ -7,7 +7,7 @@ import { RegisterListRepositories } from "./tools/listRepositories.js";
 import { RegisterCreateFile } from "./tools/createfile.js";
 
 export const server = new McpServer({
-  name: "wijimenezz",
+  name: "wijimenezz-agent",
   version: "1.0.0",
 });
 ResgisterCreateIssue(server);

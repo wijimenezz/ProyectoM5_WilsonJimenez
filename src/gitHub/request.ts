@@ -12,7 +12,7 @@ export const githubRequest = async <T>(
   try {
     const res = await op();
     const rl = readRateLimit(res.headers);
-    console.log(`[GH RateLimit] remaining: ${rl.remaining}/${rl.limit}`);
+    console.error(`[GH RateLimit] remaining: ${rl.remaining}/${rl.limit}`);
     return res.data;
   } catch (e) {
     const err = mapGitHubError(e);
@@ -24,7 +24,7 @@ export const githubRequest = async <T>(
 
     if (err instanceof GitHubServerError && attempt < 2) {
       const delay = 1000 * 2 ** attempt;
-      console.log(
+      console.error(
         `[GH] Error ${err.status}, reintentando en ${delay / 1000}s...`,
       );
       await new Promise((r) => setTimeout(r, delay));
@@ -38,6 +38,6 @@ export const githubRequest = async <T>(
 export const delayUntilReset = async (resetEpochSeconds: number) => {
   const now = Math.floor(Date.now() / 1000);
   const delay = Math.max(0, resetEpochSeconds - now) * 1000 + 1000;
-  console.log(`[GH] Rate limit alcanzado, reintentando en ${delay / 1000}s`);
+  console.error(`[GH] Rate limit alcanzado, reintentando en ${delay / 1000}s`);
   await new Promise((r) => setTimeout(r, delay));
 };

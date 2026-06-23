@@ -3,7 +3,7 @@ import { RegisterCreateRepository } from "../tools/createRepository.js";
 
 const mockCreateRepository = vi.fn();
 
-vi.mock("../../github/githubClient", () => ({
+vi.mock("../github/githubClient.js", () => ({
   GitHubClient: vi.fn().mockImplementation(() => ({
     createRepository: mockCreateRepository,
   })),

@@ -1,22 +1,20 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { RegisterCreateRepository } from "../tools/createRepository.js";
-import * as GitHubClientModule from "../github/githubClient.js";
-vi.mock("../../github/githubClient.js");
+
+const mockCreateRepository = vi.fn();
+
+vi.mock("../../github/githubClient", () => ({
+  GitHubClient: vi.fn().mockImplementation(() => ({
+    createRepository: mockCreateRepository,
+  })),
+}));
 
 describe("createRepository Tool", () => {
   let mockServer: any;
-  let mockGitHubClient: any;
 
   beforeEach(() => {
-    mockServer = {
-      registerTool: vi.fn(),
-    };
-    mockGitHubClient = {
-      createRepository: vi.fn(),
-    };
-    vi.mocked(GitHubClientModule.GitHubClient).mockImplementation(
-      () => mockGitHubClient,
-    );
+    mockServer = { registerTool: vi.fn() };
+    vi.clearAllMocks();
   });
 
   it("debe registrar el tool correctamente", () => {
@@ -35,7 +33,7 @@ describe("createRepository Tool", () => {
     RegisterCreateRepository(mockServer);
     const toolHandler = mockServer.registerTool.mock.calls[0][2];
 
-    const result = await toolHandler({ name: 123 }); // name debe ser string
+    const result = await toolHandler({ name: 123 });
 
     expect(result.isError).toBe(true);
     expect(result.content[0].text).toContain("VALIDATION");
@@ -50,7 +48,7 @@ describe("createRepository Tool", () => {
       private: false,
       defaultBranch: "main",
     };
-    mockGitHubClient.createRepository.mockResolvedValue(mockRepoData);
+    mockCreateRepository.mockResolvedValue(mockRepoData);
 
     RegisterCreateRepository(mockServer);
     const toolHandler = mockServer.registerTool.mock.calls[0][2];
@@ -67,9 +65,7 @@ describe("createRepository Tool", () => {
   });
 
   it("debe manejar errores de GitHubClient", async () => {
-    mockGitHubClient.createRepository.mockRejectedValue(
-      new Error("GitHub API error"),
-    );
+    mockCreateRepository.mockRejectedValue(new Error("GitHub API error"));
 
     RegisterCreateRepository(mockServer);
     const toolHandler = mockServer.registerTool.mock.calls[0][2];

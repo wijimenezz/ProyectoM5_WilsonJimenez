@@ -44,6 +44,44 @@ En lugar de navegar la interfaz de GitHub o escribir scripts manualmente, puedes
 
 ---
 
+# Casos de Uso
+
+Este servidor MCP está diseñado para desarrolladores, ingenieros DevOps y agentes de IA que necesitan automatizar operaciones de GitHub mediante lenguaje natural.
+
+## Casos de Uso Comunes
+
+### Gestión de Repositorios
+
+- Crear repositorios sin necesidad de abrir GitHub.
+- Inicializar nuevos proyectos rápidamente.
+- Generar estructuras de proyectos desde agentes de IA.
+
+### Gestión de Issues
+
+- Crear issues directamente desde conversaciones.
+- Listar los issues de un repositorio.
+- Realizar seguimiento de tareas de proyectos mediante clientes MCP.
+
+### Gestión de Archivos y Commits
+
+- Crear archivos de forma remota.
+- Actualizar archivos existentes.
+- Generar commits automáticamente desde flujos de trabajo con IA.
+
+### Integraciones con Agentes de IA
+
+- Claude Desktop
+- Antigravity IDE
+- VS Code Copilot
+- Clientes MCP personalizados
+
+## Beneficios
+
+- Automatiza tareas repetitivas de GitHub.
+- Expone funcionalidades de GitHub como herramientas MCP.
+- Proporciona validación y manejo de errores.
+- Simplifica la integración con asistentes de IA.
+
 ## Arquitectura
 
 ```mermaid
@@ -172,6 +210,30 @@ Internamente ejecuta el flujo completo de la Git low-level API:
 - Node.js 18+
 - Un GitHub Personal Access Token con permisos `repo`
 
+# Configuración del Personal Access Token de GitHub
+
+Este servidor MCP requiere un Personal Access Token (PAT) de GitHub para autenticarse y realizar operaciones sobre repositorios.
+
+## Crear un Token
+
+1. Inicia sesión en GitHub.
+2. Abre **Settings (Configuración)**.
+3. Navega a **Developer Settings (Configuración de Desarrollador)**.
+4. Haz clic en **Personal Access Tokens**.
+5. Selecciona una de las siguientes opciones:
+   - **Fine-grained tokens** (recomendado).
+   - O **Tokens (classic)**.
+6. Haz clic en **Generate new token**.
+7. Configura los permisos necesarios.
+8. Genera el token.
+9. Copia el token y guárdalo en un lugar seguro.
+
+Ejemplo:
+
+```env
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
 ### Pasos
 
 ```bash
@@ -210,7 +272,7 @@ Edita `%APPDATA%\Claude\claude_desktop_config.json`:
   "mcpServers": {
     "automatehub-mcp": {
       "command": "node",
-      "args": ["C:/ruta/al/proyecto/dist/index.js"],
+      "args": ["C:/ruta/absoluta/al/proyecto/dist/index.js"],
       "env": {
         "GITHUB_TOKEN": "ghp_xxxxxxxxxxxxxxxxxxxx"
       }
@@ -229,7 +291,7 @@ Edita `~/.gemini/config/mcp_config.json` (Antigravity) o `settings.json` (VS Cod
     "automatehub-mcp": {
       "type": "stdio",
       "command": "node",
-      "args": ["C:/ruta/al/proyecto/dist/index.js"],
+      "args": ["C:/ruta/absoluta/al/proyecto/dist/index.js"],
       "env": {
         "GITHUB_TOKEN": "ghp_xxxxxxxxxxxxxxxxxxxx"
       }

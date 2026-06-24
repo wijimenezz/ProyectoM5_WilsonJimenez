@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { listIssuesInputSchema } from "../schemas/inputs/listIssues.js";
 import { listIssueOutputSchema } from "../schemas/outputs/listIssues.Output.js";
 import { GitHubClient } from "../github/githubClient.js";
-import { toToolError } from "./toolResult.js";
+import { toToolError } from "../helpers/toolResult.js";
 
 export function RegisterListIssues(server: McpServer) {
   server.registerTool(

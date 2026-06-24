@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { GitHubError, GitHubValidationError } from "../error.js";
+import { GitHubError, GitHubValidationError } from "./error.js";
 
 export type ToolResult<T> =
   | { ok: true; data: T }

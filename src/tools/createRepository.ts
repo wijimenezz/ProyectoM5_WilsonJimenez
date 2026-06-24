@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { createRepositorySchema } from "../schemas/inputs/createRepository.js";
 import { CreateRepositoryOutputSchema } from "../schemas/outputs/createRepository.Output.js";
 import { GitHubClient } from "../github/githubClient.js";
-import { toToolError } from "./toolResult.js";
+import { toToolError } from "../helpers/toolResult.js";
 
 export function RegisterCreateRepository(server: McpServer) {
   server.registerTool(

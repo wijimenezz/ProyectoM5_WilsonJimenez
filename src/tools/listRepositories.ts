@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 
 import { GitHubClient } from "../github/githubClient.js";
-import { toToolError } from "./toolResult.js";
+import { toToolError } from "../helpers/toolResult.js";
 import { listRepositoriesSchema } from "../schemas/inputs/listRepository.js";
 import { ListRepositoriesOutputSchema } from "../schemas/outputs/listRepository.Output.js";
 

@@ -3,7 +3,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { createIssueSchema } from "../schemas/inputs/createIssueInput.js";
 import { CreateIssueOutputSchema } from "../schemas/outputs/createIssue.Output.js";
 import { GitHubClient } from "../github/githubClient.js";
-import { toToolError } from "./toolResult.js";
+import { toToolError } from "../helpers/toolResult.js";
 
 export function ResgisterCreateIssue(server: McpServer) {
   server.registerTool(

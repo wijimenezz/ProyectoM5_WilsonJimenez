@@ -1,4 +1,4 @@
-import { RateLimitInfo } from "./types/rateLimit.js";
+import { RateLimitInfo } from "../types/rateLimit.js";
 
 export class GitHubError extends Error {
   constructor(

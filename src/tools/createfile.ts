@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { createfileInputSchema } from "../schemas/inputs/createFileIinput.js";
 import { fileOutputSchema } from "../schemas/outputs/file.Output.js";
 import { GitHubClient } from "../github/githubClient.js";
-import { toToolError } from "./toolResult.js";
+import { toToolError } from "../helpers/toolResult.js";
 
 export function RegisterCreateFile(server: McpServer) {
   server.registerTool(

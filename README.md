@@ -4,7 +4,8 @@
 **Fecha:** Junio 2026  
 **Versión:** 1.0.0  
 **Autor:** [wijimenezz](https://github.com/wijimenezz)  
-**Estado:** Implementado
+**Estado:** Implementado  
+**Presentación:** [Presentación Técnica](https://docs.google.com/presentation/d/1H6nAg_NHlrhAYGsYveeWNWZ5eUF52pRH/edit?usp=drive_link&ouid=108634393873448290134&rtpof=true&sd=true)
 
 ---
 

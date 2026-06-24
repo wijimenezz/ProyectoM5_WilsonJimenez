@@ -1,4 +1,4 @@
-# automatehub-mcp
+# github - Agent-mcp
 
 **Tipo de documento:** Guía de Implementación  
 **Fecha:** Junio 2026  
@@ -10,7 +10,7 @@
 
 ## Contexto y Objetivo
 
-`wijimenezz - agent` es un servidor MCP (Model Context Protocol) que expone herramientas para interactuar con GitHub usando lenguaje natural desde cualquier cliente MCP compatible (Claude Desktop, Antigravity IDE, VS Code Copilot, etc.).
+`wijimenezz github - agent` es un servidor MCP (Model Context Protocol) que expone herramientas para interactuar con GitHub usando lenguaje natural desde cualquier cliente MCP compatible (Claude Desktop, Antigravity IDE, VS Code Copilot, etc.).
 
 En lugar de navegar la interfaz de GitHub o escribir scripts manualmente, puedes pedirle al agente en lenguaje natural cosas como: _"crea un repositorio llamado mi-proyecto"_ o _"lista todos mis issues abiertos en automatehub"_ y el servidor ejecuta la acción por ti.
 
